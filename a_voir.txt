@@ -1,0 +1,3 @@
+diference abstract clase et clase normale
+protectec, public, private
+

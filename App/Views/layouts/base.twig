@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Pharmacie - Accueil{% endblock %}</title>
+    
+    {# CSS Global #}
+    <link rel="stylesheet" href="{{ asset('css/all.min.css') }}">
+    {# CSS Principal #}
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+    {# Components CSS #}
+    <link rel="stylesheet" href="{{ asset('css/components/alerts.css') }}">
+    
+    {# Block pour CSS additionnels #}
+    {% block stylesheets %}{% endblock %}
+</head>
+
+<body>
+    {# Header #}
+    {% include 'partials/header.twig' %}
+
+    {# Contenu principal #}
+    <main>
+        {# Messages flash #}
+        {% include 'partials/flash.twig' %}
+        
+        {# Contenu de la page #}
+        {% block content %}{% endblock %}
+    </main>
+
+    {# Footer #}
+    {% include 'partials/footer.twig' %}
+
+    {# Block pour JavaScript additionnel #}
+    {% block javascripts %}{% endblock %}
+</body>
+</html>

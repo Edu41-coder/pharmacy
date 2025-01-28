@@ -1,0 +1,16 @@
+body.index-page {
+    background-image: url('/images/pharm1.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.index-page h2 {
+    font-size: 2.5em;
+    color: #000;
+}
+
+.index-page p {
+    font-size: 1.5em;
+    color: #000;
+} 

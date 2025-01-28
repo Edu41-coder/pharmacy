@@ -1,0 +1,66 @@
+{% extends "layouts/base.twig" %}
+
+{% block title %}Pharmacie - Accueil{% endblock %}
+
+{% block content %}
+    <div class="home-container">
+        <section class="welcome-section">
+            {# Message de bienvenue dynamique #}
+            <h1>{{ greeting }}, {{ user.prenom }}! Il est {{ current_time }}.</h1>
+            
+            {% if is_granted('ROLE_ADMIN') %}
+                <p>Connecté en tant qu'administrateur</p>
+            {% else %}
+                <p>Connecté en tant que vendeur</p>
+            {% endif %}
+            
+            <p class="navigation-hint">Utilisez le menu ci-dessus pour naviguer dans l'application.</p>
+        </section>
+
+        <section class="quick-actions">
+            <h2>Actions rapides</h2>
+            <div class="actions-grid">
+                <a href="{{ route('sales.create') }}" class="action-card">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Nouvelle Vente</span>
+                </a>
+                
+                <a href="{{ route('products.index') }}" class="action-card">
+                    <i class="fas fa-box"></i>
+                    <span>Gérer les Produits</span>
+                </a>
+                
+                <a href="{{ route('clients.index') }}" class="action-card">
+                    <i class="fas fa-users"></i>
+                    <span>Clients</span>
+                </a>
+                
+                <a href="{{ route('inventory.index') }}" class="action-card">
+                    <i class="fas fa-warehouse"></i>
+                    <span>Inventaire</span>
+                </a>
+            </div>
+        </section>
+
+        {% if is_granted('ROLE_ADMIN') %}
+            <section class="admin-section">
+                <h2>Administration</h2>
+                <div class="actions-grid">
+                    <a href="{{ route('accounting.index') }}" class="action-card">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Comptabilité</span>
+                    </a>
+                    
+                    <a href="{{ route('admin.users') }}" class="action-card">
+                        <i class="fas fa-user-cog"></i>
+                        <span>Gérer Utilisateurs</span>
+                    </a>
+                </div>
+            </section>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/home/index.css') }}">
+{% endblock %} 

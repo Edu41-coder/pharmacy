@@ -1,0 +1,48 @@
+Sur PowerShell, vous pouvez exécuter PHPUnit de plusieurs façons :
+
+PS C:\xampp\htdocs\Pharmacie> .\vendor\bin\phpunit
+
+PS C:\xampp\htdocs\Pharmacie> php vendor/bin/phpunit
+
+Ou créer un script dans composer.json :
+PS C:\xampp\htdocs\Pharmacie> composer test
+
+
+Vous pouvez aussi ajouter des options :
+
+# Exécuter un fichier de test spécifique
+PS C:\xampp\htdocs\Pharmacie> .\vendor\bin\phpunit tests/Core/Router/RouterTest.php
+
+# Avec couleurs et verbose
+PS C:\xampp\htdocs\Pharmacie> .\vendor\bin\phpunit --colors=always --verbose
+
+# Avec un filtre
+PS C:\xampp\htdocs\Pharmacie> .\vendor\bin\phpunit --filter testParseUrl
+
+# Tester un fichier spécifique
+.\vendor\bin\phpunit tests/Core/Router/RouterTest.php
+
+# Tester une classe spécifique
+.\vendor\bin\phpunit --filter RouterTest
+
+# Afficher la couverture de code
+.\vendor\bin\phpunit --coverage-text
+
+
+
+http://localhost/Pharmacie/
+
+http://localhost/Pharmacie/auth/login
+
+http://localhost/Pharmacie/dashboard
+
+http://localhost/Pharmacie/admin/users
+
+
+
+Docker
+
+Application : http://localhost:8080
+PHPMyAdmin : http://localhost:8081
+utilisateur : edu
+mot de passe : 6333

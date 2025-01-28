@@ -1,0 +1,213 @@
+Pour implémenter l'application avec Docker, voici la structure nécessaire :
+
+1. Créer un Dockerfile pour PHP :
+
+FROM php:8.2-apache
+
+# Installation des dépendances système
+RUN apt-get update && apt-get install -y \
+    git \
+    unzip \
+    libzip-dev \
+    && docker-php-ext-install zip pdo pdo_mysql
+
+# Activation des modules Apache nécessaires
+RUN a2enmod rewrite
+
+# Installation de Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Configuration du DocumentRoot d'Apache
+ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
+RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
+
+WORKDIR /var/www/html
+
+Créer un docker-compose.yml :
+
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_DATABASE=pharmacie
+      - DB_USERNAME=pharmacie_user
+      - DB_PASSWORD=secret
+
+  db:
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_DATABASE=pharmacie
+      - MYSQL_USER=pharmacie_user
+      - MYSQL_PASSWORD=secret
+      - MYSQL_ROOT_PASSWORD=root_secret
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8081:80"
+    environment:
+      - PMA_HOST=db
+    depends_on:
+      - db
+
+volumes:
+  mysql_data:
+
+
+Créer un fichier .env.docker :
+
+DB_CONNECTION=mysql
+DB_HOST=db
+DB_PORT=3306
+DB_DATABASE=pharmacie
+DB_USERNAME=pharmacie_user
+DB_PASSWORD=secret
+
+APP_ENV=development
+APP_DEBUG=true
+
+
+Modifier le .gitignore :
+
+/vendor
+.env
+.env.*.local
+/node_modules
+.DS_Store
+mysql_data/
+
+
+Vérifier l'installation dans un terminal :
+
+docker --version
+docker-compose --version
+
+D'abord, créez le dossier storage :
+
+mkdir storage
+mkdir storage/logs
+mkdir storage/cache
+
+
+Commandes pour démarrer :
+
+# Arrêter les conteneurs existants si nécessaire
+docker-compose down
+
+# Construire les images
+docker-compose build
+
+# Arrêter Apache dans XAMPP
+# Démarrer les conteneurs
+docker-compose up -d
+
+# Installer les dépendances
+docker-compose exec app composer install
+
+# Vérifier les logs
+docker-compose logs -f
+
+Vérifier que les conteneurs fonctionnent :
+
+docker-compose ps
+
+Vérifier les logs en cas d'erreur :
+
+docker-compose logs -f
+
+
+
+Votre application sera accessible sur :
+Application : http://localhost:8080
+PHPMyAdmin : http://localhost:8081
+utilisateur : edu
+mot de passe : 6333
+
+
+Avantages de Docker :
+Environnement isolé et reproductible
+2. Facile à déployer
+Gestion des dépendances simplifiée
+Configuration identique en développement et production
+
+
+Docker peut fonctionner avec Apache de deux façons :
+Option 1 (Recommandée) : Utiliser uniquement Docker
+Arrêter Apache de XAMPP
+Utiliser l'Apache qui est dans le conteneur Docker
+
+# Arrêter Apache dans XAMPP
+# Puis lancer Docker
+docker-compose up -d
+
+
+Option 2 : Faire coexister les deux
+Modifier les ports dans docker-compose.yml pour éviter les conflits
+
+
+services:
+  app:
+    # ...
+    ports:
+      - "8080:80"  # Apache Docker utilisera le port 8080
+    # ...
+
+  db:
+    # ...
+    ports:
+      - "3307:3306"  # MySQL Docker utilisera le port 3307
+    # ...
+
+  phpmyadmin:
+    # ...
+    ports:
+      - "8081:80"  # PHPMyAdmin utilisera le port 8081
+
+
+our migrer votre base de données existante vers Docker :
+a. D'abord, exportez votre base depuis XAMPP :
+
+# Dans phpMyAdmin de XAMPP
+1. Sélectionnez votre base 'pharmacy'
+2. Cliquez sur 'Exporter'
+3. Sauvegardez le fichier .sql
+
+b. Créez un dossier pour le script SQL :
+
+mkdir -p docker/mysql/init
+
+c. Placez votre fichier .sql exporté dans ce dossier et ajoutez ce volume dans docker-compose.yml :
+
+  db:
+    # ... configuration existante ...
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./docker/mysql/init:/docker-entrypoint-initdb.d  # Ajoutez cette ligne
+
+d. Redémarrez les conteneurs :
+
+docker-compose down
+docker-compose up -d
+
+Maintenant :
+Docker a sa propre base de données
+Les données sont persistantes grâce au volume mysql_data
+Votre application dans Docker utilise cette nouvelle base
+XAMPP et Docker sont complètement séparés
+
+
+

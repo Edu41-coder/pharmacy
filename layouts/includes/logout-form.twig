@@ -1,0 +1,4 @@
+<form method="POST" action="{{ route('auth.logout') }}" id="logout-form" class="d-inline">
+    {{ csrf_token|raw }}
+    <button type="submit" class="btn btn-link nav-link">Déconnexion</button>
+</form> 

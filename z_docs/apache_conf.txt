@@ -1,0 +1,52 @@
+Créer le fichier de configuration :
+
+Chemin : C:/xampp/apache/conf/extra/httpd-pharmacie.config
+
+Copier la configuration dans ce nouveau fichier :
+
+<Directory "C:/xampp/htdocs/Pharmacie">
+    Options Indexes FollowSymLinks MultiViews
+    AllowOverride All
+    Require all granted
+    
+    # Configuration spécifique pour Pharmacie
+    DirectoryIndex public/index.php
+    FallbackResource /Pharmacie/public/index.php
+    
+    # Protection supplémentaire
+    <FilesMatch "\.(env|config|json|lock|git|sql)$">
+        Require all denied
+    </FilesMatch>
+</Directory>
+
+# Configuration pour le dossier public
+<Directory "C:/xampp/htdocs/Pharmacie/public">
+    Options Indexes FollowSymLinks MultiViews
+    AllowOverride All
+    Require all granted
+</Directory>
+
+Ouvrir le fichier principal Apache :
+
+Chemin : C:/xampp/apache/conf/httpd.conf
+
+Ajouter la ligne suivante à la fin du fichier httpd.conf :
+
+# Custom configurations
+Include conf/extra/httpd-pharmacie.conf
+
+Vérifier les permissions du fichier :
+Clic droit sur httpd-pharmacie.conf
+Propriétés
+Sécurité
+S'assurer que SYSTEM et Administrateurs ont accès en lecture
+Redémarrer Apache :
+Ouvrir XAMPP Control Panel
+Cliquer sur "Stop" pour Apache
+Attendre quelques secondes
+Cliquer sur "Start"
+
+Vérifier les logs pour les erreurs :
+
+Chemin : C:/xampp/apache/logs/error.log
+
