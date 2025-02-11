@@ -1,0 +1,124 @@
+php bin/console make:entity
+Cette commande crée ou met à jour une entité (classe PHP qui représente une table en base de données)
+Elle est interactive et vous pose des questions :
+> php bin/console make:entity
+
+ Class name of the entity to create or update (e.g. GrumpyPuppy):
+ > User
+
+ New property name (press <return> to stop adding fields):
+ > email
+
+ Field type (enter ? to see all types) [string]:
+ > string
+
+ Field length [255]:
+ > 180
+
+ Can this field be null in the database (nullable) (yes/no) [no]:
+ > no
+
+ Add another property? Enter the property name (or press <return> to stop adding fields):
+ > 
+
+ php bin/console make:migration
+Cette commande analyse vos entités et crée un fichier de migration
+Elle compare l'état actuel de votre base de données avec vos entités
+Elle génère le SQL nécessaire pour mettre à jour la base de données
+
+> php bin/console make:migration
+
+ Success! 
+ 
+ Next: Review the new migration "migrations/Version20240319123456.php"
+ Then: Run the migration with php bin/console doctrine:migrations:migrate
+
+ php bin/console doctrine:migrations:migrate
+
+ Cette commande exécute les migrations en attente
+Elle met à jour la structure de votre base de données
+
+> php bin/console doctrine:migrations:migrate
+
+ WARNING! You are about to execute a migration that could result in schema changes and data loss. Are you sure you wish to continue? (yes/no) [yes]:
+ > yes
+
+ [notice] Migrating up to Version20240319123456
+ [notice] finished in 100.1ms, used 14M memory
+
+ Exemple concret :
+1. Créer une entité Product :
+
+php bin/console make:entity Product
+
+Définir ses propriétés :
+
+// src/Entity/Product.php
+#[ORM\Entity]
+class Product
+{
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $name = null;
+
+    #[ORM\Column]
+    private ?float $price = null;
+}
+
+Générer la migration :
+
+php bin/console make:migration
+
+
+Crée un fichier comme :
+// migrations/Version20240319123456.php
+public function up(Schema $schema): void
+{
+    $this->addSql('CREATE TABLE product (
+        id INT AUTO_INCREMENT NOT NULL,
+        name VARCHAR(255) NOT NULL,
+        price DOUBLE PRECISION NOT NULL,
+        PRIMARY KEY(id)
+    )');
+}
+
+Exécuter la migration :
+
+php bin/console doctrine:migrations:migrate
+
+Les avantages :
+Gestion automatique des changements de base de données
+Versioning de la structure de la base
+Possibilité de revenir en arrière
+Synchronisation entre le code et la base de données
+Déploiement plus sûr
+C'est un workflow essentiel pour :
+Créer des tables
+Modifier la structure existante
+Garder une trace des changements
+Travailler en équipe
+
+Autres commandes utiles :
+
+# Voir la liste des commandes disponibles
+php bin/console list
+
+# Vider le cache
+php bin/console cache:clear
+
+# Créer un contrôleur
+php bin/console make:controller
+
+# Créer un formulaire
+php bin/console make:form
+
+es commandes sont des outils de Symfony qui :
+Génèrent du code automatiquement
+Gèrent la base de données
+Aident au développement
+Facilitent les tâches courantes
+C'est un des grands avantages de Symfony : ses outils en ligne de commande qui accélèrent le développement.

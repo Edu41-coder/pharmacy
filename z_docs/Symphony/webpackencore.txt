@@ -1,0 +1,151 @@
+Webpack Encore est un outil qui simplifie l'utilisation de Webpack dans Symfony. Voici ses principaux avantages :
+Gestion des assets modernes :
+Compilation de SASS/SCSS en CSS
+Minification des fichiers JS et CSS
+Support de ES6+ avec Babel
+Gestion des modules JavaScript
+// assets/app.js
+import './styles/app.css';
+import $ from 'jquery';
+import 'bootstrap';
+Optimisation des performances :
+Compression des fichiers
+Cache busting (versioning automatique)
+Chunking (découpage des fichiers)
+Lazy loading
+Développement plus efficace :
+Hot reload (rechargement automatique)
+Source maps pour le debugging
+Watch mode (recompilation automatique)
+Organisation des assets 
+assets/
+├── app.js              # Point d'entrée JavaScript
+├── styles/
+│   └── app.scss        # Styles SCSS
+├── images/             # Images
+└── controllers/        # Contrôleurs JavaScript
+Intégration avec Symfony :
+{# templates/base.html.twig #}
+{{ encore_entry_link_tags('app') }}    {# CSS #}
+{{ encore_entry_script_tags('app') }}  {# JavaScript #}
+
+En résumé :
+Modernise la gestion des assets
+Améliore les performances
+Facilite le développement
+S'intègre parfaitement avec Symfony
+C'est particulièrement utile pour les applications modernes avec beaucoup de JavaScript et CSS.
+
+
+
+Non, le fichier webpack_encore.yaml est pour la configuration générale de Webpack Encore. Pour configurer Bootstrap, vous devez :
+Installer les dépendances :
+
+npm install bootstrap @popperjs/core --save
+
+
+Créer/Modifier le fichier webpack.config.js à la racine du projet :
+
+const Encore = require('@symfony/webpack-encore');
+
+Encore
+    .setOutputPath('public/build/')
+    .setPublicPath('/build')
+    .addEntry('app', './assets/app.js')
+    .enableStimulusBridge('./assets/controllers.json')
+    .splitEntryChunks()
+    .enableSingleRuntimeChunk()
+    .cleanupOutputBeforeBuild()
+    .enableBuildNotifications()
+    .enableSourceMaps(!Encore.isProduction())
+    .enableVersioning(Encore.isProduction())
+    .configureBabel((config) => {
+        config.plugins.push('@babel/plugin-proposal-class-properties');
+    })
+;
+
+module.exports = Encore.getWebpackConfig();
+
+Créer/Modifier le fichier assets/app.js :
+
+Créer/Modifier le fichier assets/styles/app.css :
+
+Compiler les assets :
+
+# En développement
+npm run watch
+
+# Pour la production
+npm run build
+
+Non, une fois que vous avez installé Bootstrap via npm, vous n'avez plus besoin de garder les fichiers Bootstrap dans public/assets/css/.
+Vous pouvez :
+Supprimer les fichiers Bootstrap de public/assets/css/ :
+bootstrap.css
+bootstrap.min.css
+bootstrap.css.map
+bootstrap.bundle.js
+bootstrap.bundle.min.js
+
+Garder uniquement :
+
+public/assets/
+└── css/
+    └── all.min.css    # Pour Font Awesome uniquementCar maintenant Bootstrap est :
+Installé dans node_modules/
+Géré par Webpack Encore
+Compilé dans public/build/
+Les avantages :
+Meilleure gestion des dépendances
+Optimisation automatique
+Versioning automatique
+Pas de duplication de code
+Plus facile à mettre à jour
+Si vous voulez mettre à jour Bootstrap plus tard, il suffira de faire 
+npm update bootstrap
+
+npm install @symfony/stimulus-bridge
+npm install @hotwired/stimulus
+
+Structure des dossiers :
+assets/
+├── styles/
+│   ├── _variables.scss
+│   ├── app.scss
+│   ├── components/
+│   │   ├── _buttons.scss
+│   │   ├── _forms.scss
+│   │   └── _navbar.scss
+│   └── layouts/
+│       ├── _header.scss
+│       ├── _footer.scss
+│       └── _dashboard.scss
+├── app.js
+├── bootstrap.js
+└── controllers.json
+
+
+
+Oui, il faut laisser le terminal ouvert quand vous utilisez npm run watch. Voici pourquoi :
+Mode Watch :
+La commande watch surveille les changements dans vos fichiers
+Recompile automatiquement quand vous modifiez un fichier
+Met à jour le build en temps réel
+Options de développement :
+npm run watch : Garde le terminal ouvert et recompile automatiquement (développement)
+npm run build : Compile une fois et s'arrête (production)
+npm run dev : Compile une fois et s'arrête (développement)
+Workflow typique :
+
+# Terminal 1 - Pour Symfony
+symfony serve
+
+# Terminal 2 - Pour Webpack Encore
+npm run watch
+
+Avantages de watch :
+Développement plus rapide
+Pas besoin de recompiler manuellement
+Feedback immédiat sur les erreurs
+Hot reload (rechargement automatique du navigateur)
+Si vous fermez le terminal, les changements dans vos assets ne seront plus compilés automatiquement.

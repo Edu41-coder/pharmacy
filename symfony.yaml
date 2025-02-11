@@ -1,0 +1,2 @@
+cli:
+    php_ini: '%kernel.project_dir%/php-cli.ini' 

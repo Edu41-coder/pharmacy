@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Erreur {{ status_code }}{% endblock %}
+
+{% block body %}
+<div class="error-container text-center">
+    <div class="error-code">{{ status_code }}</div>
+    
+    <h1 class="mb-4">
+        {% if status_code == 404 %}
+            Page non trouvée
+        {% elseif status_code == 403 %}
+            Accès refusé
+        {% elseif status_code == 401 %}
+            Non autorisé
+        {% elseif status_code == 405 %}
+            Méthode non autorisée
+        {% elseif status_code == 429 %}
+            Trop de requêtes
+        {% elseif status_code == 500 %}
+            Erreur serveur
+        {% else %}
+            Une erreur est survenue
+        {% endif %}
+    </h1>
+
+    <p class="mb-4">
+        {% if status_code == 404 %}
+            La page que vous recherchez n'existe pas ou a été déplacée.
+        {% elseif status_code == 403 %}
+            Vous n'avez pas les droits nécessaires pour accéder à cette page.
+        {% elseif status_code == 401 %}
+            Veuillez vous connecter pour accéder à cette page.
+        {% elseif status_code == 405 %}
+            La méthode utilisée n'est pas autorisée pour cette ressource.
+        {% elseif status_code == 429 %}
+            Vous avez effectué trop de requêtes. Veuillez patienter avant de réessayer.
+        {% elseif status_code == 500 %}
+            Une erreur interne s'est produite sur le serveur. Notre équipe a été notifiée.
+        {% else %}
+            Une erreur inattendue s'est produite. Veuillez réessayer plus tard.
+        {% endif %}
+    </p>
+
+    <a href="{{ path('app_dashboard') }}" class="btn btn-primary">
+        <i class="fas fa-home me-2"></i>Retour à l'accueil
+    </a>
+</div>
+{% endblock %} 

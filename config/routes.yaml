@@ -1,0 +1,77 @@
+# Route par défaut
+app_home:
+    path: /
+    controller: App\Controller\DashboardController::index
+    methods: [GET]
+
+# Route de connexion
+app_login:
+    path: /login
+    controller: App\Controller\SecurityController::login
+    methods: [GET, POST]
+
+# Route du dashboard (unique)
+app_dashboard:
+    path: /dashboard
+    controller: App\Controller\DashboardController::index
+    methods: [GET]
+
+# Route de déconnexion
+app_logout:
+    path: /logout
+    methods: [GET]
+
+# Chargement automatique des routes par attributs
+controllers:
+    resource:
+        path: ../src/Controller/
+        namespace: App\Controller
+    type: attribute
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

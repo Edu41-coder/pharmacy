@@ -1,0 +1,42 @@
+<?php
+
+namespace App\Models\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+#[ORM\Entity]
+#[ORM\Table(name: 'clients')]
+class Client
+{
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
+    private ?int $id = null;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank]
+    private string $nom;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank]
+    private string $prenom;
+
+    #[ORM\Column(type: 'string', length: 180, unique: true)]
+    #[Assert\Email]
+    private string $email;
+
+    #[ORM\Column(type: 'string', length: 20)]
+    #[Assert\NotBlank]
+    private string $telephone;
+
+    #[ORM\OneToMany(targetEntity: Ordonnance::class, mappedBy: 'client')]
+    private $ordonnances;
+
+    public function __construct()
+    {
+        $this->ordonnances = new ArrayCollection();
+    }
+
+    // Getters et Setters
+}

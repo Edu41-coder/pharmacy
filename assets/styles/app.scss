@@ -1,0 +1,37 @@
+// Variables
+@import "variables";
+
+// Bootstrap
+@import "~bootstrap/scss/bootstrap";
+
+// Components
+@import "components/navbar";
+@import "components/buttons";
+@import "components/forms";
+@import "components/error";
+
+// Layouts
+@import "layouts/dashboard";
+
+// Styles globaux
+body {
+    background-color: #f8f9fa;
+}
+
+.container {
+    max-width: 1200px;
+    
+    .content {
+        padding: 20px;
+    }
+}
+
+@import "pages/login";
+@import "pages/dashboard";
+
+.disabled {
+    color: #6c757d !important;
+    pointer-events: none;
+    cursor: not-allowed;
+    opacity: 0.65;
+}

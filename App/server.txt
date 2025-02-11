@@ -1,5 +1,0 @@
-http://localhost/Pharmacie/public/auth/index.php
-
-http://localhost/Pharmacie/test_env.php
-
-http://localhost/Pharmacie/mot_haché.php

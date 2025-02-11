@@ -1,41 +1,17 @@
 <?php
 
-require_once dirname(__DIR__) . '/vendor/autoload.php';
+// Configuration de l'encodage
+mb_internal_encoding('UTF-8');
+mb_http_output('UTF-8');
+// Supprimons mb_http_input car il nécessite un type spécifique
+mb_regex_encoding('UTF-8');
+setlocale(LC_ALL, 'fr_FR.UTF-8');
+ini_set('default_charset', 'UTF-8');
 
-use Core\Container\Container;
-use Core\Http\Request;
-use Core\Router\Router;
-use Dotenv\Dotenv;
+use App\Kernel;
 
-// Charger les variables d'environnement
-$dotenv = Dotenv::createImmutable(dirname(__DIR__));
-$dotenv->load();
+require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
-// Créer le container
-$container = new Container();
-
-// Charger les services
-$services = require dirname(__DIR__) . '/config/services.php';
-foreach ($services as $id => $factory) {
-    $container->set($id, $factory);
-}
-
-// Créer le router avec le container
-$router = new Router($_SERVER['REQUEST_URI'] ?? '', '', $container);
-
-// Charger les routes
-require_once dirname(__DIR__) . '/routes/web.php';
-
-// Créer la requête
-$request = new Request();
-
-// Dispatcher la requête
-try {
-    $response = $router->dispatch($request);
-    $response->send();
-} catch (\Exception $e) {
-    // Gérer l'erreur
-    error_log($e->getMessage());
-    http_response_code(500);
-    echo "Une erreur est survenue";
-}
+return function (array $context) {
+    return new Kernel($context['APP_ENV'], (bool) $context['APP_DEBUG']);
+};

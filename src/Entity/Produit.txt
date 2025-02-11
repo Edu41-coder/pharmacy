@@ -1,0 +1,38 @@
+<?php
+
+namespace App\Models\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+#[ORM\Entity]
+#[ORM\Table(name: 'produits')]
+class Produit
+{
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
+    private ?int $id = null;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank]
+    private string $nom;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?string $description = null;
+
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 2)]
+    #[Assert\NotBlank]
+    #[Assert\PositiveOrZero]
+    private float $prix;
+
+    #[ORM\Column(type: 'integer')]
+    #[Assert\NotBlank]
+    #[Assert\PositiveOrZero]
+    private int $stock;
+
+    #[ORM\ManyToOne(targetEntity: Inventaire::class, inversedBy: 'produits')]
+    private ?Inventaire $inventaire = null;
+
+    // Getters et Setters
+}

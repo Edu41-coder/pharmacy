@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}Pharmacie - Accueil{% endblock %}</title>
+        
+        {# Webpack Encore CSS #}
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+    </head>
+    <body class="d-flex flex-column min-vh-100">
+        {# Header #}
+        {% include 'layouts/header.html.twig' %}
+
+        {# Contenu principal #}
+        <main class="container py-4 flex-grow-1">
+            {# Messages flash avec Bootstrap #}
+            {% include 'layouts/flash.html.twig' %}
+            
+            {# Contenu de la page #}
+            {% block body %}{% endblock %}
+        </main>
+
+        {# Footer #}
+        {% include 'layouts/footer.html.twig' %}
+
+        {# Webpack Encore JS #}
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+    </body>
+</html> 

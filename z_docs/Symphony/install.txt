@@ -1,0 +1,234 @@
+1. D'abord, installer les composants Symfony nécessaires via Composer :
+composer require symfony/orm-pack
+composer require symfony/form
+composer require symfony/validator
+
+2. Modifier nos entités pour utiliser les annotations Doctrine :
+
+<?php
+
+namespace App\Models\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+#[ORM\Entity]
+#[ORM\Table(name: 'users')]
+class User
+{
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
+    private ?int $id = null;
+
+    #[ORM\Column(type: 'string', length: 180, unique: true)]
+    #[Assert\NotBlank]
+    #[Assert\Email]
+    private string $email;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank]
+    private string $password;
+
+    #[ORM\Column(type: 'json')]
+    private array $roles = [];
+
+    // Getters et Setters
+}
+
+
+Configuration Doctrine dans config/doctrine.php :
+
+<?php
+
+use Doctrine\DBAL\DriverManager;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\ORMSetup;
+
+$config = ORMSetup::createAttributeMetadataConfiguration(
+    paths: [__DIR__ . '/../App/Models/Entity'],
+    isDevMode: true,
+);
+
+$connection = DriverManager::getConnection([
+    'driver' => 'pdo_mysql',
+    'host' => $_ENV['DB_HOST'],
+    'dbname' => $_ENV['DB_NAME'],
+    'user' => $_ENV['DB_USER'],
+    'password' => $_ENV['DB_PASSWORD'],
+], $config);
+
+return EntityManager::create($connection, $config);
+
+Pour l'utiliser dans nos contrôleurs :
+
+<?php
+
+namespace App\Controllers;
+
+use App\Models\Entity\Client;
+use Doctrine\ORM\EntityManagerInterface;
+
+class ClientController extends BaseController
+{
+    private EntityManagerInterface $entityManager;
+
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+
+    public function index()
+    {
+        $clients = $this->entityManager
+            ->getRepository(Client::class)
+            ->findAll();
+
+        return $this->render('clients/index', ['clients' => $clients]);
+    }
+
+    public function create(Request $request)
+    {
+        $client = new Client();
+        
+        // Création du formulaire avec Symfony Form si souhaité
+        // Ou utiliser la validation directement
+        
+        if ($request->isMethod('POST')) {
+            $data = $request->request->all();
+            
+            $client->setNom($data['nom']);
+            $client->setPrenom($data['prenom']);
+            // ... autres setters
+            
+            $this->entityManager->persist($client);
+            $this->entityManager->flush();
+            
+            return $this->redirect('/clients');
+        }
+
+        return $this->render('clients/create');
+    }
+}
+
+Installer les dépendances Symfony nécessaires :
+
+composer require symfony/framework-bundle
+composer require symfony/security-bundle
+
+Configurer les services dans config/services.yaml :
+
+services:
+    Core\Controller\BaseController:
+        abstract: true
+        autowire: true
+        autoconfigure: true
+
+Les middlewares sont remplacés par :
+Le système de sécurité Symfony (security.yaml)
+Les Event Listeners (src/EventListener/)
+Les Voters (src/Security/)
+
+
+Le dossier public/build est géré automatiquement par Webpack Encore dans Symfony. Voici comment ça fonctionne :
+
+installation de Webpack Encore :
+composer require symfony/webpack-encore-bundle
+npm install
+
+Configuration dans webpack.config.js :
+
+Structure des assets source :
+
+assets/
+├── app.js
+├── styles/
+│   └── app.css
+├── images/
+└── controllers/
+
+Compilation :
+
+# En développement
+npm run watch
+
+# Pour la production
+npm run build
+
+5. Le dossier public/build contiendra :
+
+public/build/
+├── app.js
+├── app.css
+├── runtime.js
+├── vendors-node_modules.js
+├── manifest.json
+└── entrypoints.json
+
+ous ne devez jamais :
+Modifier manuellement le contenu de public/build
+Versionner le dossier public/build (à ajouter dans .gitignore)
+Les avantages :
+Minification automatique
+Versioning des assets
+Compilation SASS/SCSS
+Support de modules JS modernes
+Hot reload en développement
+
+-
+
+questce quon met dans le dossier public/build?
+
+Le dossier public/build est géré automatiquement par Webpack Encore dans Symfony. Voici comment ça fonctionne :
+Installation de Webpack Encore :
+Configuration dans webpack.config.js :
+Structure des assets source :
+Compilation :
+5. Le dossier public/build contiendra :
+Vous ne devez jamais :
+Modifier manuellement le contenu de public/build
+Versionner le dossier public/build (à ajouter dans .gitignore)
+Les avantages :
+Minification automatique
+Versioning des assets
+Compilation SASS/SCSS
+Support de modules JS modernes
+Hot reload en développement
+je le mets ou ce fichier
+webpack.config.js?
+
+Le fichier webpack.config.js doit être placé à la racine de votre projet Symfony :
+Pour configurer :
+
+Installer les dépendances :
+
+# Installer Encore
+composer require symfony/webpack-encore-bundle
+
+# Installer les dépendances Node
+npm install @symfony/webpack-encore --save-dev
+npm install sass-loader sass --save-dev
+
+Créer la structure des assets :
+
+mkdir -p assets/styles
+touch assets/app.js
+touch assets/styles/app.css
+
+Utiliser dans les templates :
+
+{{ encore_entry_link_tags('app') }}
+{{ encore_entry_script_tags('app') }}
+
+Compiler les assets :
+
+# En développement (watch mode)
+npm run watch
+
+# Pour la production
+npm run build
+
+Cette organisation permet à Webpack Encore de :
+Trouver facilement vos fichiers source
+Générer les assets dans public/build
+Gérer les dépendances correctement

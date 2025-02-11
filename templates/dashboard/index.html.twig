@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pharmacie - Tableau de bord{% endblock %}
+
+{% block body %}
+<div class="dashboard-container">
+    <div class="welcome-banner text-center py-4">
+        <h1 class="display-4">{{ greeting() }}, {{ app.user.prenom }}!</h1>
+        <p class="lead">Il est {{ "now"|date("H:i") }}</p>
+    </div>
+
+    <div class="container">
+        <div class="row g-4 justify-content-center">
+            {# Cards pour tous les utilisateurs #}
+            <div class="col-md-3">
+                <a href="#" class="card action-card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="fas fa-cash-register fa-3x mb-3"></i>
+                        <h5 class="card-title">Ventes</h5>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-3">
+                <a href="#" class="card action-card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="fas fa-boxes fa-3x mb-3"></i>
+                        <h5 class="card-title">Inventaire</h5>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-3">
+                <a href="#" class="card action-card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="fas fa-clipboard-list fa-3x mb-3"></i>
+                        <h5 class="card-title">À Commander</h5>
+                    </div>
+                </a>
+            </div>
+
+            {# Card pour pharmacien et vendeur #}
+            {% if is_granted('ROLE_PHARMACIEN') or is_granted('ROLE_VENDEUR') %}
+                <div class="col-md-3">
+                    <a href="#" class="card action-card h-100 shadow-sm">
+                        <div class="card-body text-center">
+                            <i class="fas fa-folder-open fa-3x mb-3"></i>
+                            <h5 class="card-title">Mes Documents</h5>
+                        </div>
+                    </a>
+                </div>
+            {% endif %}
+
+            {# Card pour admin #}
+            {% if is_granted('ROLE_ADMIN') %}
+                <div class="col-md-3">
+                    <a href="#" class="card action-card h-100 shadow-sm">
+                        <div class="card-body text-center">
+                            <i class="fas fa-user-shield fa-3x mb-3"></i>
+                            <h5 class="card-title">Espace Administrateur</h5>
+                        </div>
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %} 

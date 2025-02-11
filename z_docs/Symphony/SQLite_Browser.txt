@@ -1,0 +1,7 @@
+Téléchargez DB Browser for SQLite :
+Allez sur https://sqlitebrowser.org/dl/
+Téléchargez la version Windows
+Une fois installé :
+Ouvrez DB Browser for SQLite
+Cliquez sur "Ouvrir une base de données"
+Naviguez jusqu'à C:\xampp\htdocs\Pharmacie\var\data\data.db

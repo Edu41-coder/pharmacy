@@ -1,0 +1,99 @@
+Pour les fichiers externes comme jQuery UI, Select2, etc., il y a deux approches recommandées avec Webpack Encore :
+Approche recommandée - NPM 
+# Installer via npm
+npm install jquery-ui-dist
+npm install select2
+
+
+Puis dans assets/app.js :
+
+// Import des bibliothèques
+import 'jquery-ui-dist/jquery-ui.min';
+import 'select2';
+
+// Import des styles
+import 'jquery-ui-dist/jquery-ui.min.css';
+import 'select2/dist/css/select2.min.css';
+
+Alternative - Copier dans assets :
+
+// webpack.config.js
+Encore
+    // ... autres configs
+    .copyFiles({
+        from: './assets/vendor',
+        to: 'vendor/[path][name].[hash:8].[ext]'
+    })
+
+ assets/
+├── vendor/
+│   ├── jquery-ui/
+│   │   ├── jquery-ui.min.css
+│   │   └── jquery-ui.min.js
+│   └── select2/
+│       ├── select2.min.css
+│       └── select2.min.js
+├── styles/
+└── app.js
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('app') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+{% endblock %}
+
+Pour gérer ces fichiers JavaScript, la meilleure approche est de les installer via npm :
+
+Installer les dépendances :
+
+npm install axios
+npm install jquery
+npm install jquery-ui-dist
+npm install select2
+
+2. Importer dans assets/app.js :
+// Import jQuery et ses plugins
+import $ from 'jquery';
+global.$ = global.jQuery = $;
+
+// Import des autres bibliothèques
+import 'jquery-ui-dist/jquery-ui.min';
+import 'select2';
+import axios from 'axios';
+
+// Import des styles
+import './styles/app.scss';
+import 'jquery-ui-dist/jquery-ui.min.css';
+import 'select2/dist/css/select2.min.css';
+
+// Import Bootstrap
+import 'bootstrap';
+
+Mettre à jour webpack.config.js si nécessaire :
+const Encore = require('@symfony/webpack-encore');
+
+Encore
+    // ... autres configs ...
+    .autoProvideVariables({
+        $: 'jquery',
+        jQuery: 'jquery'
+    })
+;
+
+npm run dev :
+
+Compile les assets une seule fois
+À utiliser quand vous avez fini vos modifications
+Parfait pour tester une modification finale
+
+
+npm run watch :
+
+Surveille les changements en continu
+Recompile automatiquement quand vous modifiez un fichier
+Idéal pendant le développement
+Donc :
+Si vous avez fini vos modifications → npm run dev suffit
+Si vous allez continuer à développer → lancez npm run watch

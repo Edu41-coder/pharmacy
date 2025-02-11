@@ -1,0 +1,21 @@
+on peut voir les logs dans Symfony de plusieurs façons :
+
+Dans le fichier de log Symfony 
+cat var/log/dev.log
+
+
+Dans la console Symfony :
+.\symfony.bat server:log
+
+Dans les logs PHP de XAMPP :
+C:\xampp\php\logs\php_error_log
+
+# Voir les logs en temps réel
+.\symfony.bat server:log
+
+# Voir les logs du fichier
+cat var/log/dev.log
+
+# Nettoyer les logs
+rm var/log/dev.log
+touch var/log/dev.log

@@ -1,0 +1,115 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails du produit{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-info text-white">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h3 class="mb-0">{{ produit.nom }}</h3>
+                        <a href="{{ path('produits_index') }}" class="btn btn-outline-light btn-sm">
+                            <i class="fas fa-arrow-left"></i> Retour
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <h5 class="text-muted">Informations générales</h5>
+                            <dl class="row">
+                                <dt class="col-sm-4">Prix HT</dt>
+                                <dd class="col-sm-8">{{ produit.prixVenteHt|number_format(2, ',', ' ') }} €</dd>
+
+                                <dt class="col-sm-4">Prescription</dt>
+                                <dd class="col-sm-8">
+                                    {% if produit.prescription == 'oui' %}
+                                        <span class="badge bg-warning">Requise</span>
+                                    {% else %}
+                                        <span class="badge bg-success">Non requise</span>
+                                    {% endif %}
+                                </dd>
+
+                                <dt class="col-sm-4">Remboursement</dt>
+                                <dd class="col-sm-8">
+                                    {% if produit.tauxRemboursement %}
+                                        <span class="badge bg-info">{{ produit.tauxRemboursement }}%</span>
+                                    {% else %}
+                                        <span class="badge bg-secondary">Non remboursé</span>
+                                    {% endif %}
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="text-muted">Gestion du stock</h5>
+                            <dl class="row">
+                                <dt class="col-sm-4">Alerte stock</dt>
+                                <dd class="col-sm-8">
+                                    {% if produit.alerte %}
+                                        {{ produit.alerte }} unités
+                                    {% else %}
+                                        Non défini
+                                    {% endif %}
+                                </dd>
+
+                                <dt class="col-sm-4">Alertes</dt>
+                                <dd class="col-sm-8">
+                                    {% if produit.declencherAlerte == 'oui' %}
+                                        <span class="badge bg-warning">Activées</span>
+                                    {% else %}
+                                        <span class="badge bg-secondary">Désactivées</span>
+                                    {% endif %}
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+
+                    <h5 class="text-muted mb-3">Description</h5>
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            {{ produit.description|nl2br }}
+                        </div>
+                    </div>
+
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <div class="mt-4 d-flex justify-content-end gap-2">
+                            <a href="{{ path('produits_edit', {'id': produit.id}) }}" class="btn btn-primary">
+                                <i class="fas fa-edit"></i> Modifier
+                            </a>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                                <i class="fas fa-trash"></i> Supprimer
+                            </button>
+                        </div>
+
+                        {# Modal de confirmation de suppression #}
+                        <div class="modal fade" id="deleteModal" tabindex="-1">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Confirmer la suppression</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Êtes-vous sûr de vouloir supprimer le produit :</p>
+                                        <p class="text-center fw-bold">{{ produit.nom }}</p>
+                                        <p class="text-danger small">Cette action est irréversible.</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                        <form action="{{ path('produits_delete', {'id': produit.id}) }}" method="post" class="d-inline">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ produit.id) }}">
+                                            <button type="submit" class="btn btn-danger">Supprimer</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

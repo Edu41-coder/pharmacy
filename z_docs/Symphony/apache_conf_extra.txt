@@ -1,0 +1,28 @@
+Créez un nouveau fichier C:\xampp\apache\conf\extra\httpd-pharmacie-symfony.conf :
+# Configuration VirtualHost pour l'application Symfony Pharmacie
+<VirtualHost *:8000>
+    DocumentRoot "C:/xampp/htdocs/Pharmacie/public"
+    ServerName localhost
+    ServerAlias www.localhost
+
+    # Logs spécifiques pour cette application
+    ErrorLog "logs/pharmacie-symfony-error.log"
+    CustomLog "logs/pharmacie-symfony-access.log" combined
+
+    <Directory "C:/xampp/htdocs/Pharmacie/public">
+        Options Indexes FollowSymLinks MultiViews
+        AllowOverride All
+        Require all granted
+        FallbackResource /index.php
+
+        # Protection supplémentaire
+        <FilesMatch "\.(env|config|json|lock|git|sql)$">
+            Require all denied
+        </FilesMatch>
+    </Directory>
+</VirtualHost>
+
+# À la fin du fichier, après vos autres Include
+Include conf/extra/httpd-pharmacie.conf
+Include conf/extra/httpd-pharmacie-symfony.conf  # Ajoutez cette ligne
+

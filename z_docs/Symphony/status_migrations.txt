@@ -1,0 +1,31 @@
+Pour voir le statut de vos migrations, utilisez :
+
+Vue d'ensemble :
+# Voir toutes les migrations et leur statut
+php bin/console doctrine:migrations:status
+
+Liste détaillée :
+# Voir la liste des migrations exécutées
+php bin/console doctrine:query:sql "SELECT * FROM doctrine_migration_versions ORDER BY version"
+
+Pour plus de détails :
+# Voir les migrations disponibles
+php bin/console doctrine:migrations:list
+
+Pour voir la table des versions :
+# Voir directement dans la base de données
+php bin/console doctrine:query:sql "SELECT * FROM doctrine_migration_versions"
+
+Voir les migrations non exécutées :
+# Liste des migrations en attente
+php bin/console doctrine:migrations:up-to-date
+
+
+Voir les différences :
+# Voir ce qui n'est pas encore migré
+php bin/console doctrine:schema:update --dump-sql
+
+
+Pour plus de détails :
+# Vérifier l'état de synchronisation
+php bin/console doctrine:schema:validate

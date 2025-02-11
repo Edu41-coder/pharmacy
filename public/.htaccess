@@ -1,12 +1,10 @@
-# Activation du module de réécriture
-RewriteEngine On
+DirectoryIndex index.php
 
-# Si le fichier/dossier n'existe pas physiquement
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^(.*)$ index.php [QSA,L]
+</IfModule>
 
-# Redirige toutes les requêtes vers index.php
-RewriteRule ^(.*)$ index.php [QSA,L]
-
-# Protection contre l'affichage du contenu des dossiers
-Options -Indexes 
+# Charset
+AddDefaultCharset UTF-8

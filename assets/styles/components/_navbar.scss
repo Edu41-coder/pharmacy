@@ -1,0 +1,345 @@
+// Styles communs pour header et footer
+.navbar {
+    height: 95px;  // Réduit de 100px à 95px
+    padding: 0;  // Supprime le padding par défaut de Bootstrap
+    width: 100%;  // Assure la pleine largeur
+    
+    .container {
+        max-width: 1000px;  // Un peu plus large pour 9 colonnes
+        margin: 0 auto;
+        display: flex;
+        flex-direction: row;  // Change de column à row
+        align-items: center;  // Centre verticalement
+        height: 100%;  // Prend toute la hauteur
+        padding: 0 20px;  // Padding fixe des deux côtés
+        position: relative;  // Pour le positionnement absolu du logo
+    }
+
+    .navbar-brand {
+        display: flex;
+        align-items: center;
+        width: 40px !important;  // Plus petit
+        min-width: 40px !important;
+        max-width: 40px !important;
+        margin: 0;
+        padding: 0;
+        position: absolute;  // Positionnement absolu
+        left: 20px;  // Même valeur que le padding du container
+        
+        img {
+            display: block;
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: contain;
+        }
+    }
+
+    .navbar-collapse {
+        width: 100%;
+        padding-left: 80px;  // logo (40px) + espace (40px)
+    }
+
+    .navbar-nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem 2rem;  // Espace vertical et horizontal entre les éléments
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        justify-content: flex-start;  // Aligne à gauche
+    }
+
+    .nav-item {
+        flex: 0 0 auto;  // Ne pas étirer les éléments
+        padding: 0;
+        margin: 0;
+        
+        .nav-link {
+            padding: 0;
+            white-space: nowrap;
+            font-size: 0.85rem;
+        }
+    }
+
+    .logout-item {
+        position: absolute !important;
+        bottom: 10px;
+        right: 20px;
+        margin: 0 !important;
+        z-index: 10;
+
+        .logout-button {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 8px 16px !important;
+            border-radius: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            font-size: 0.9rem !important;
+            
+            i {
+                font-size: 1rem;
+            }
+
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.2);
+                transform: scale(1.05);
+            }
+        }
+    }
+}
+
+.header, .footer {
+    .container {
+        max-width: 1200px;  // Plus large pour accommoder 9 colonnes
+        margin: 0 auto;
+        padding: 0;  // Supprime le padding pour coller le logo
+    }
+
+    .row {
+        align-items: center;
+        margin: 0;  // Supprime la marge par défaut de Bootstrap
+    }
+
+    .col-md-4 {
+        max-width: 80px;  // Plus large pour le logo
+        padding: 0;  // Supprime le padding pour coller au bord
+    }
+
+    .navbar-brand {
+        display: flex;
+        align-items: center;
+        width: 80px !important;  // Logo plus grand
+        min-width: 80px !important;
+        max-width: 80px !important;
+        padding: 0;
+        margin: 0;
+        
+        img {
+            display: block;
+            width: 100% !important;
+            height: auto;
+            max-width: none;
+        }
+    }
+
+    .navbar {
+        background-color: transparent !important;
+        padding: 7px 0 0 0 !important; // Forcer le padding top avec !important
+        position: relative;
+        min-height: 95px;
+        
+        .navbar-nav {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 0.5rem 1rem;
+            width: 100%;
+            margin: 0; // Enlever la marge précédente
+            padding: 0 1rem 50px 1rem;
+            list-style-type: none;
+
+            .nav-item {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: 0;
+                padding: 0.5rem 0;
+
+                .nav-link {
+                    font-size: 0.9rem;
+                    white-space: nowrap;
+                    text-align: center;
+                    color: white;
+                    text-decoration: none;
+                    transition: all 0.3s ease-out;
+                    padding: 0.5rem;
+                    width: 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    &:hover:not(.disabled) {
+                        text-decoration: underline;
+                        transform: scale(1.05);
+                        filter: brightness(1.2);
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Styles différents pour le hover selon le header/footer
+.header .navbar-nav .nav-item .nav-link:hover:not(.disabled) {
+    color: lighten(#007bff, 15%);  // Bleu un peu moins clair
+}
+
+.footer .navbar-nav .nav-item .nav-link:hover:not(.disabled) {
+    color: lighten(#198754, 30%);  // Vert un peu moins clair
+}
+
+// Styles communs pour les boutons toggle
+.header-toggle, .footer-toggle {
+    position: absolute;
+    width: 60px;
+    height: 30px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    right: 20px;
+    z-index: 1000;  // Toujours au-dessus
+}
+
+// Styles spécifiques pour le header
+.header {
+    background-color: var(--bs-primary) !important;
+    position: relative;
+    transition: transform 0.3s ease;
+    padding-bottom: 30px;  // Espace pour le bouton
+    margin-bottom: 5px;
+
+    &.hidden {
+        transform: translateY(calc(-100% + 30px));  // Garde le bouton visible
+    }
+
+    .header-toggle {
+        bottom: 0;  // Aligné avec le padding-bottom
+        border-radius: 0 0 5px 5px;
+        background-color: var(--bs-primary);
+    }
+}
+
+// Styles spécifiques pour le footer
+.footer {
+    background-color: #198754 !important;
+    position: relative;
+    transition: transform 0.3s ease;
+    padding-top: 30px;  // Espace pour le bouton
+    margin-top: 5px;
+
+    &.hidden {
+        transform: translateY(calc(100% - 30px));  // Garde le bouton visible
+    }
+
+    .footer-toggle {
+        top: 0;  // Aligné avec le padding-top
+        border-radius: 5px 5px 0 0;
+        background-color: #198754;
+    }
+}
+
+// Rotation des icônes
+.header.hidden .header-toggle i,
+.footer.hidden .footer-toggle i {
+    transform: rotate(180deg);
+}
+
+// Styles pour mobile
+@media (max-width: 768px) {
+    .header, .footer {
+        z-index: 1040; // Maintenez un z-index élevé
+
+        .col-md-4 {
+            max-width: 60px;
+        }
+
+        .navbar-brand {
+            width: 60px !important;
+            min-width: 60px !important;
+            max-width: 60px !important;
+        }
+
+        .navbar {
+            width: 100%;
+            
+            .navbar-collapse {
+                width: 100%;
+                padding-left: 0;
+                background-color: var(--bs-primary) !important; // Bleu pour le header
+                margin-top: 1rem;
+                padding: 1rem;
+                border-radius: 4px;
+            }
+
+            .navbar-nav {
+                grid-template-columns: repeat(1, 1fr);
+                gap: 0.5rem;
+                width: 100%;
+                padding: 0;
+
+                .nav-item {
+                    margin: 0;
+                    width: 100%;
+                    
+                    .nav-link {
+                        font-size: 0.9rem;
+                        text-align: center;
+                        color: white !important;
+                    }
+                }
+            }
+
+            .logout-item {
+                position: static !important;
+                width: 100% !important;
+                margin-top: 1rem !important;
+
+                .logout-button {
+                    justify-content: center;
+                    width: 100%;
+                }
+            }
+        }
+
+        .container {
+            max-width: 100%;
+            padding: 0;
+        }
+    }
+
+    // Ajustements des boutons toggle en mobile
+    .header-toggle, .footer-toggle {
+        width: 40px;
+        height: 25px;
+        right: 10px;
+    }
+
+    // Ajustements spécifiques pour le header en mobile
+    .header {
+        padding-bottom: 25px;
+        margin-bottom: -25px;
+
+        &.hidden {
+            transform: translateY(calc(-100% + 25px));
+        }
+    }
+
+    // Ajustements spécifiques pour le footer en mobile
+    .footer {
+        padding-top: 25px;
+        margin-top: -25px;
+
+        &.hidden {
+            transform: translateY(calc(100% - 25px));
+        }
+    }
+
+    .footer {
+        .navbar {
+            .navbar-collapse {
+                width: 100%;
+                padding-left: 0;
+                background-color: #198754 !important; // Vert pour le footer
+                margin-top: 1rem;
+                padding: 1rem;
+                border-radius: 4px;
+            }
+        }
+    }
+}

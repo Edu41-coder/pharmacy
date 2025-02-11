@@ -1,0 +1,110 @@
+ l'exécutable Symfony CLI n'est pas installé. Voici comment l'installer 
+Pour Windows, il y a deux options :
+Option 1 - Via Scoop :
+# Installer Scoop si vous ne l'avez pas
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+irm get.scoop.sh | iex
+
+# Installer Symfony CLI
+scoop install symfony-cli
+
+Option 2 - Installation directe :
+Télécharger l'installateur Windows depuis : https://github.com/symfony-cli/symfony-cli/releases/latest
+Exécuter le fichier .exe téléchargé
+Redémarrer votre terminal
+Vérifier l'installation :
+
+symfony -v
+
+Pour démarrer le serveur, vous pouvez aussi utiliser le serveur PHP intégré 
+
+# Option 1 - Avec Symfony CLI (une fois installé)
+symfony serve
+
+# Option 2 - Avec PHP directement
+php -S localhost:8000 -t public/
+
+
+Dans un autre terminal, lancez Webpack :
+npm run watch
+
+
+Puis accédez à :
+
+http://localhost:8000
+
+
+Non, Symfony n'a pas besoin de XAMPP. En fait, il est préférable d'utiliser le serveur PHP intégré de Symfony pour le développement car :
+Avantages sans XAMPP :
+Configuration plus propre
+Environnement dédié au projet
+Meilleure isolation
+Plus proche de l'environnement de production
+Pas de conflits de configuration
+Prérequis pour Symfony :
+PHP (version 8.1 ou supérieure)
+Composer
+Symfony CLI
+MySQL/MariaDB (installé séparément)
+Installation recommandée :
+
+# 1. Installer PHP séparément
+scoop install php
+
+# 2. Installer Composer
+scoop install composer
+
+# 3. Installer Symfony CLI (déjà fait)
+scoop install symfony-cli
+
+# 4. Installer MySQL
+scoop install mysql
+
+Structure du projet :
+
+C:\Projects\Pharmacie\    # Au lieu de C:\xampp\htdocs\Pharmacie
+
+Pour arrêter le serveur Symfony, vous avez plusieurs options :
+Dans le terminal où le serveur tourne :
+Appuyez sur Ctrl + C
+Depuis un autre terminal :
+
+symfony server:stop
+
+Pour arrêter tous les serveurs (si vous en avez plusieurs) :
+symfony server:stop --all
+
+Pour arrêter Webpack Encore :
+Dans le terminal où npm run watch tourne
+Appuyez sur Ctrl + C
+
+
+Oui, c'est parfait ! Vous pouvez utiliser XAMPP pour MySQL et PHP, et Symfony CLI pour le serveur de développement. Voici la configuration :
+Démarrer XAMPP :
+Démarrer Apache (pour phpMyAdmin si besoin)
+Démarrer MySQL
+Vérifier la base de données :
+Ouvrir phpMyAdmin : http://localhost/phpmyadmin
+Vérifier que la base pharmacy existe
+Si non, la créer avec le bon encodage (utf8mb4_unicode_ci)
+Vérifier la connexion dans .env.local :
+
+DATABASE_URL="mysql://root:@127.0.0.1:3306/pharmacy?serverVersion=8.0&charset=utf8mb4"
+
+Démarrer le serveur Symfony 
+
+symfony serve
+
+
+Dans un autre terminal, lancer Webpack :
+npm run watch
+
+Accéder à l'application :
+http://localhost:8000
+
+
+Cette configuration hybride (XAMPP + Symfony CLI) est parfaitement valide pour le développement. Vous profitez :
+De XAMPP pour MySQL et phpMyAdmin
+Du serveur Symfony pour de meilleures performances de développement
+Des outils de debug de Symfony
+

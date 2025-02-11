@@ -1,0 +1,56 @@
+Oui, vous pouvez supprimer le dossier routes/ et ses fichiers car avec Symfony, les routes sont définies :
+Soit avec les attributs dans les contrôleurs (recommandé) :
+
+use Symfony\Component\Routing\Annotation\Route;
+
+class HomeController extends AbstractController
+{
+    #[Route('/', name: 'home')]
+    public function index(): Response
+    {
+        return $this->render('home/index.html.twig');
+    }
+}
+
+Pour les routes d'API :
+
+#[Route('/api', name: 'api_')]
+class ProductController extends AbstractController
+{
+    #[Route('/products', name: 'products_list', methods: ['GET'])]
+    public function index(): JsonResponse
+    {
+        // ...
+    }
+
+    #[Route('/products', name: 'products_create', methods: ['POST'])]
+    public function store(Request $request): JsonResponse
+    {
+        // ...
+    }
+}
+
+Pour les routes protégées :
+#[Route('/admin', name: 'admin_')]
+class DashboardController extends AbstractController
+{
+    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/users', name: 'users')]
+    public function users(): Response
+    {
+        // ...
+    }
+}
+
+es middlewares sont remplacés par :
+Security Voters
+Event Listeners
+Attributs comme #[IsGranted]
+Donc vous pouvez supprimer :
+routes/web.php
+routes/api.php
+Tout le dossier routes/
+
+
+
+

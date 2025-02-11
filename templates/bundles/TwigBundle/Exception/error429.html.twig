@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Trop de requêtes{% endblock %}
+
+{% block body %}
+<div class="error-container text-center">
+    <div class="error-code">429</div>
+    <h1 class="mb-4">Trop de requêtes</h1>
+    <p class="mb-4">Vous avez effectué trop de requêtes. Veuillez patienter avant de réessayer.</p>
+    <a href="{{ path('app_dashboard') }}" class="btn btn-primary">
+        <i class="fas fa-home me-2"></i>Retour à l'accueil
+    </a>
+</div>
+{% endblock %} 

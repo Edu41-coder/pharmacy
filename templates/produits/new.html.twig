@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau produit{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h3 class="mb-0">Créer un nouveau produit</h3>
+                        <a href="{{ path('produits_index') }}" class="btn btn-outline-light btn-sm">
+                            <i class="fas fa-arrow-left"></i> Retour
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    {{ form_start(form, {'attr': {'class': 'needs-validation'}}) }}
+                        <div class="mb-3">
+                            {{ form_row(form.nom) }}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form_row(form.description) }}
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                {{ form_row(form.prixVenteHt) }}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                {{ form_row(form.prescription) }}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                {{ form_row(form.tauxRemboursement) }}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                {{ form_row(form.alerte) }}
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form_row(form.declencherAlerte) }}
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Créer le produit
+                            </button>
+                        </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

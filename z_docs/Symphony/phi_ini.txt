@@ -1,0 +1,60 @@
+Créer un fichier php.ini dans le dossier du projet :
+
+# Créer le fichier
+copy C:\xampp\php\php.ini .\.php.ini
+
+Modifier .php.ini avec les recommandations :
+
+; Extensions
+extension=intl
+
+; Accélérateur PHP
+zend_extension=opcache
+opcache.enable=1
+opcache.enable_cli=1
+opcache.memory_consumption=256
+opcache.max_accelerated_files=20000
+
+; Cache des chemins
+realpath_cache_size=5M
+realpath_cache_ttl=600
+
+; Limites de téléchargement
+upload_max_filesize=10M
+post_max_size=12M
+
+; Mémoire
+memory_limit=256M
+
+; Temps d'exécution
+max_execution_time=60
+max_input_time=60
+
+; Erreurs en développement
+display_errors=On
+display_startup_errors=On
+error_reporting=E_ALL
+
+; Date et heure
+date.timezone=Europe/Paris
+
+Configurer Symfony pour utiliser ce fichier :
+symfony.yaml
+cli:
+    php_ini: .php.ini
+
+Vérifier la configuration :
+# Vérifier que Symfony utilise le bon php.ini
+php -i | findstr "Loaded Configuration File"
+
+# Vérifier les extensions
+php bin/console about
+
+Cette configuration :
+Active l'extension intl
+Configure l'accélérateur PHP (opcache)
+Augmente le cache des chemins
+Ajuste les limites de téléchargement
+Optimise la mémoire et les performances
+
+

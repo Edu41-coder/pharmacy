@@ -1,0 +1,86 @@
+.dashboard-container {
+    background: url('../../images/pharm_index.jpg') no-repeat center center fixed;
+    background-size: cover;
+    min-height: calc(100vh - 200px);
+    position: relative;
+    padding: 2rem 0;
+    
+    
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.85);
+        z-index: 1;
+    }
+
+    > * {
+        position: relative;
+        z-index: 2;
+    }
+
+    .welcome-banner {
+        margin-bottom: 3rem;
+
+        .display-4 {
+            color: var(--bs-primary);
+            font-weight: 600;
+            font-size: 2.4rem;
+        }
+
+        .lead {
+            color: #1a237e;
+            font-size: 1.2rem;
+        }
+    }
+
+    .action-card {
+        text-decoration: none;
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.9);
+        border: none;
+        transform: scale(1);
+        
+        &:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2) !important;
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .card-body {
+            padding: 2rem 1.5rem;
+        }
+
+        i {
+            color: var(--bs-primary);
+            transition: all 0.3s ease;
+        }
+
+        .card-title {
+            color: #2c3e50;
+            margin: 0;
+            transition: all 0.3s ease;
+        }
+
+        &:hover {
+            i, .card-title {
+                transform: scale(1.1);
+            }
+        }
+    }
+
+    .section-title {
+        color: var(--bs-primary);
+        font-weight: 600;
+    }
+
+    .role-badge {
+        .badge {
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+        }
+    }
+} 

@@ -1,3 +1,12 @@
+Pour vérifier les versions de Docker et Docker Compose, utilisez ces commandes :
+Pour Docker :
+docker --version
+Pour Docker Compose :
+docker compose version
+Pour plus de détails sur votre installation Docker :
+docker info
+
+
 Pour implémenter l'application avec Docker, voici la structure nécessaire :
 
 1. Créer un Dockerfile pour PHP :
@@ -118,7 +127,7 @@ docker-compose up -d
 # Installer les dépendances
 docker-compose exec app composer install
 
-# Vérifier les logs
+# Vérifier les logs?
 docker-compose logs -f
 
 Vérifier que les conteneurs fonctionnent :

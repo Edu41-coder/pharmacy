@@ -1,0 +1,58 @@
+.login-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url('../../images/pharm_login.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 20px;
+
+    .card {
+        max-width: 450px;
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0.95);
+        border: none;
+        border-radius: 15px;
+
+        &-body {
+            backdrop-filter: blur(10px);
+        }
+    }
+
+    h1 {
+        color: #2c3e50;
+        font-size: 2rem;
+    }
+
+    .input-group {
+        &-text {
+            background-color: #f8f9fa;
+            border-right: none;
+        }
+
+        .form-control {
+            border-left: none;
+            
+            &:focus {
+                border-color: #dee2e6;
+                box-shadow: none;
+            }
+        }
+    }
+
+    .btn-primary {
+        background-color: #3498db;
+        border-color: #3498db;
+        padding: 12px;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+
+        &:hover {
+            background-color: #2980b9;
+            border-color: #2980b9;
+            transform: translateY(-2px);
+        }
+    }
+}

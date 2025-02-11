@@ -1,0 +1,22 @@
+Pour le développement :
+npm run watch :
+À lancer UNE FOIS au début de votre session de développement
+Il tourne en continu (mode "watch")
+Recompile automatiquement quand vous modifiez un fichier dans assets/
+Vous n'avez pas besoin de relancer la commande à chaque modification
+Gardez le terminal ouvert pendant que vous développez
+# Dans un terminal dédié
+npm run watch
+
+npm run build :
+À lancer UNE SEULE FOIS avant de déployer en production
+Crée une version optimisée de vos assets
+Minifie et compresse les fichiers
+Ajoute le versioning
+# Avant de déployer en production
+npm run build
+
+En résumé :
+Développement : npm run watch une fois au début
+Production : npm run build une fois avant déploiement
+Vous n'avez pas besoin de relancer ces commandes à chaque modification de vos assets en développement, le mode "watch" s'en charge automatiquement.

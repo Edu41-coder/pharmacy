@@ -1,0 +1,9 @@
+http://localhost:8000
+
+http://127.0.0.1:8000/login?debug=1
+
+symfony serve
+symfony server:stop
+php bin/console cache:clear
+taskkill /F /PID 7688
+

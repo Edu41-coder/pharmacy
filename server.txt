@@ -29,20 +29,58 @@ PS C:\xampp\htdocs\Pharmacie> .\vendor\bin\phpunit --filter testParseUrl
 .\vendor\bin\phpunit --coverage-text
 
 
+Pour tester en développement :
 
-http://localhost/Pharmacie/
+# Démarrer le serveur Symfony
+symfony serve
 
-http://localhost/Pharmacie/auth/login
+# Dans un autre terminal, lancer Webpack Encore
+npm run watch
 
-http://localhost/Pharmacie/dashboard
+Ah, il y a une confusion ici. Vous pouvez accéder à l'application même avec symfony server:stop --all car votre application tourne en réalité sur Apache (XAMPP) et non sur le serveur Symfony.
+Il y a deux façons différentes de faire tourner une application Symfony :
+Avec le serveur de développement Symfony :
+symfony server:start
+# Utilise généralement le port 8000
 
-http://localhost/Pharmacie/admin/users
+Avec Apache (XAMPP) :
+# Configuré dans votre httpd.conf et vhosts
+# Tourne sur le port que vous avez configuré (8000 dans votre cas)
+
+Dans votre cas, c'est Apache qui sert votre application, pas le serveur de développement Symfony. C'est pourquoi :
+symfony server:stop --all n'a pas d'effet
+L'application reste accessible via Apache
+Pour vraiment arrêter votre application, il faut :
+Arrêter Apache dans XAMPP Control Panel
+Ou utiliser la commande : net stop Apache2.4 (en admin)
+Si vous voulez utiliser exclusivement le serveur de développement Symfony :
+Arrêtez Apache dans XAMPP
+Utilisez symfony server:start
+Pour l'arrêter, utilisez symfony server:stop
+Le serveur de développement Symfony est utile pour le développement, mais en production, on utilise toujours un vrai serveur web comme Apache ou Nginx.
 
 
 
-Docker
 
-Application : http://localhost:8080
-PHPMyAdmin : http://localhost:8081
-utilisateur : edu
-mot de passe : 6333
+
+
+
+
+http://localhost:8000
+
+http://localhost:8000/login
+
+http://127.0.0.1:8000/login?debug=1
+
+http://localhost:8000/dashboard
+
+ Admin nom  
+ Test   prenom  
+ admin@test.com
+
+ pharmacien@test.com
+
+ vendeur@test.com
+ 
+ password123
+

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Pharmacie - Connexion</title>
+        
+        {# Webpack Encore CSS #}
+        {{ encore_entry_link_tags('app') }}
+    </head>
+    <body>
+        {# Messages flash #}
+        {% include 'layouts/flash.html.twig' %}
+        
+        <div class="login-container">
+            <div class="card shadow-lg">
+                <div class="card-body p-5">
+                    <h1 class="text-center mb-4">Connexion</h1>
+
+                    {% if error %}
+                        <div class="alert alert-danger">
+                            {{ error.messageKey|trans(error.messageData, 'security') }}
+                        </div>
+                    {% endif %}
+
+                    <form method="post">
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" name="_username" id="email" class="form-control" value="{{ last_username }}" required autofocus>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Mot de passe</label>
+                            <input type="password" name="_password" id="password" class="form-control" required>
+                        </div>
+
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                        <button type="submit" class="btn btn-primary w-100">Se connecter</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        {# Webpack Encore JS #}
+        {{ encore_entry_script_tags('app') }}
+    </body>
+</html> 

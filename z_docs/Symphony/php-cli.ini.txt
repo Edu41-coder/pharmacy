@@ -1,0 +1,23 @@
+Le fait d'avoir deux fichiers php.ini (un pour Apache et un pour CLI) est nécessaire car PHP peut s'exécuter dans deux contextes différents :
+php.ini pour Apache (dans xampp/php/php.ini) :
+Utilisé quand PHP s'exécute comme module d'Apache
+S'applique aux requêtes web
+Utilisé quand vous accédez à votre site via le navigateur
+Important pour le fonctionnement de votre application web
+php.ini pour CLI (php-cli.ini) :
+Utilisé quand PHP s'exécute en ligne de commande
+S'applique aux commandes Symfony console
+Utilisé pour :
+  php bin/console cache:clear
+  php bin/console make:controller
+  php bin/console doctrine:migrations:migrate
+Important pour les outils de développement
+Pourquoi deux fichiers ?
+Les besoins sont différents :
+CLI peut nécessiter plus de mémoire pour certaines commandes
+Les paramètres de timeout peuvent être différents
+La gestion des erreurs peut être différente
+2. Sécurité :
+Le CLI peut avoir des permissions différentes
+Certaines fonctions peuvent être désactivées dans le web mais nécessaires en CLI
+Si vous n'utilisez pas la ligne de commande (pas de Symfony, pas de Composer), alors oui, le php.ini d'Apache suffit. Mais pour le développement moderne avec Symfony, les deux sont nécessaires.

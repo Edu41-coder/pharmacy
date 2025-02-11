@@ -1,0 +1,5 @@
+debug:
+    dump_destination: "php://stderr"
+    max_items: 250
+    min_depth: 0
+    max_string_length: 1024 

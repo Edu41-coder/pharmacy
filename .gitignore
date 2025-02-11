@@ -13,3 +13,25 @@ npm-debug.log
 yarn-error.log
 .DS_Store
 mysql_data/
+/.env.local
+/.env.local.php
+/var/cache/*
+/var/log/*
+!var/cache/.gitkeep
+!var/log/.gitkeep
+###> symfony/framework-bundle ###
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
+
+###> symfony/webpack-encore-bundle ###
+/node_modules/
+/public/build/
+npm-debug.log
+yarn-error.log
+###< symfony/webpack-encore-bundle ###

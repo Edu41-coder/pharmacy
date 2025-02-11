@@ -1,0 +1,87 @@
+parameters:
+    app.site_title: 'Gestion Pharmacie'
+    app.name: 'Pharmacie App'
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+
+    App\Controller\:
+        resource: '../src/Controller'
+        tags: ['controller.service_arguments']
+
+    App\Service\AuthService:
+        arguments:
+            $userRepository: '@App\Repository\UserRepository'
+            $passwordHasher: '@security.password_hasher'
+            $security: '@security.helper'
+
+    App\Service\UserService:
+        arguments:
+            $entityManager: '@doctrine.orm.entity_manager'
+            $userRepository: '@App\Repository\UserRepository'
+            $passwordHasher: '@security.password_hasher'
+
+    App\Models\Repository\UserRepository:
+        factory: ['@doctrine.orm.entity_manager', 'getRepository']
+        arguments:
+            - App\Models\Entity\User
+
+    App\Repository\:
+        resource: '../src/Repository'
+        arguments:
+            $registry: '@doctrine'
+
+    App\Twig\:
+        resource: '../src/Twig/'
+        tags: ['twig.extension']
+
+    App\EventListener\SecurityListener:
+        arguments:
+            $security: '@security.helper'
+            $urlGenerator: '@router'
+            $logger: '@logger'
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, priority: 100 }
+            - { name: monolog.logger, channel: security }
+
+    App\Repository\UserRepository:
+        arguments:
+            $registry: '@doctrine'
+            $passwordHasher: '@security.password_hasher'
+
+    App\Security\UserVoter:
+        tags: ['security.voter']
+
+    App\Service\FlashService:
+        arguments:
+            $requestStack: '@request_stack'
+
+    App\Twig\AppExtension:
+        arguments:
+            $urlGenerator: '@router'
+            $security: '@security.helper'
+        tags: ['twig.extension']
+
+    App\Twig\AssetExtension:
+        tags: ['twig.extension']
+
+    App\Security\AuthenticationSuccessHandler:
+        arguments:
+            $logger: '@logger'
+            $security: '@security.helper'
+            $urlGenerator: '@router'
+        tags: ['security.authentication.success_handler']
+
+    form.factory:
+        class: Symfony\Component\Form\FormFactory
+        arguments: ['@form.registry']

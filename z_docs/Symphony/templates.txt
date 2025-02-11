@@ -1,0 +1,66 @@
+templates/
+├── base.html.twig
+├── layouts/
+│   ├── header.html.twig
+│   └── footer.html.twig
+├── admin/
+│   ├── dashboard.html.twig
+│   ├── users/
+│   ├── products/
+│   ├── categories/
+│   ├── suppliers/
+│   └── sales/
+├── products/
+│   ├── index.html.twig
+│   ├── show.html.twig
+│   └── search.html.twig
+├── sales/
+│   ├── new.html.twig
+│   └── history.html.twig
+└── security/
+    └── login.html.twig
+
+
+
+segunda vez
+
+Templates de base :
+
+templates/
+├── base.html.twig                # Template principal
+└── layouts/
+    ├── header.html.twig          # En-tête
+    ├── footer.html.twig          # Pied de page
+    ├── sidebar.html.twig         # Barre latérale (si nécessaire)
+    └── flash_messages.html.twig  # Messages flash
+
+
+Templates d'authentification :
+templates/security/
+├── login.html.twig               # Connexion
+├── register.html.twig            # Inscription (si nécessaire)
+└── forgot_password.html.twig     # Mot de passe oublié
+
+3. Templates admin :
+templates/admin/
+├── dashboard.html.twig           # Tableau de bord
+├── users/                        # Gestion utilisateurs
+│   ├── index.html.twig
+│   ├── new.html.twig
+│   └── edit.html.twig
+├── products/                     # Gestion produits
+│   ├── index.html.twig
+│   ├── new.html.twig
+│   └── edit.html.twig
+└── sales/                        # Gestion ventes
+    ├── index.html.twig
+    └── show.html.twig
+
+Templates front : 
+
+templates/
+├── home/
+│   └── index.html.twig          # Page d'accueil
+└── products/                     # Catalogue produits
+    ├── index.html.twig
+    └── show.html.twig
